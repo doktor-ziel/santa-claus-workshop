@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 import static com.griddynamics.tech3camp.santa.claus.workshop.Utils.justSleepForShortRandomMoment;
 
-public class SantaClaus implements Runnable {
+public class SantaClaus extends Thread {
 
     Logger logger = LoggerFactory.getLogger(SantaClaus.class);
     private final Publisher publisher;

@@ -28,6 +28,11 @@ public class WorkshopConfiguration {
     }
 
     @Bean
+    public SantaClaus santaClaus(Publisher requestGiftsForGoodChildrenPublisher, InputStream giftsListInputStream, Function<String, PubsubMessage> reindeerMessageCreator) {
+        return new SantaClaus(requestGiftsForGoodChildrenPublisher, giftsListInputStream, reindeerMessageCreator);
+    }
+
+    @Bean
     public Publisher requestGiftsForGoodChildrenPublisher(
             TopicName topicName,
             TransportChannelProvider channelProvider,
@@ -67,9 +72,9 @@ public class WorkshopConfiguration {
             ExecutorService elvesPool,
             Publisher requestGiftsForGoodChildrenPublisher,
             Subscriber ordersForGiftsSubscriber,
-            Function<String, PubsubMessage> reindeerMessageCreator) {
+            SantaClaus santaClaus) {
         return new Workshop(
                 giftsListInputStream, elvesPool, requestGiftsForGoodChildrenPublisher,
-                ordersForGiftsSubscriber, reindeerMessageCreator);
+                ordersForGiftsSubscriber, santaClaus);
     }
 }
