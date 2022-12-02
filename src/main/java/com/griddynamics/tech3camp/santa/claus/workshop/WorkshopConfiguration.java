@@ -4,8 +4,6 @@ import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.pubsub.v1.*;
 import com.google.pubsub.v1.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +17,8 @@ import java.util.function.Function;
 
 @Configuration
 public class WorkshopConfiguration {
-
-    Logger logger = LoggerFactory.getLogger(WorkshopConfiguration.class);
-
     @Bean
     public InputStream giftsListInputStream(@Value("${gifts-list-resource-name}") String resourceName) {
-        logger.error(resourceName);
         return getClass().getResourceAsStream(resourceName);
     }
 

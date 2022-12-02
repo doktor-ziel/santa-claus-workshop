@@ -18,6 +18,7 @@ public class GiftProductionTask implements Runnable {
 
     @Override
     public void run() {
+        logger.debug("Starting production of the gift '{}'", giftToProduct);
         justSleepForLongRandomMoment();
         logger.info("Gift '{}' done", giftToProduct);
     }

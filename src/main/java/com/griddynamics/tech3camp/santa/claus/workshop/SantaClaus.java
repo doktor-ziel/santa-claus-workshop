@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.function.Function;
 
-import static com.griddynamics.tech3camp.santa.claus.workshop.Utils.justSleepForRandomMoment;
 import static com.griddynamics.tech3camp.santa.claus.workshop.Utils.justSleepForShortRandomMoment;
 
 public class SantaClaus implements Runnable {
@@ -37,6 +36,8 @@ public class SantaClaus implements Runnable {
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            publisher.publish(PubsubMessage.newBuilder().putAttributes("work", "done").build());
         }
     }
 }

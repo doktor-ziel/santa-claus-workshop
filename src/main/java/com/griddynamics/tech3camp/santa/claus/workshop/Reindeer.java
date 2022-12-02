@@ -22,9 +22,17 @@ public class Reindeer implements MessageReceiver {
     @Override
     public void receiveMessage(PubsubMessage message, AckReplyConsumer consumer) {
         justSleepForLongRandomMoment();
-        String gift = message.getAttributesOrDefault("gift", "surprise gift");
-        elvesPool.submit(new GiftProductionTask(gift));
-        logger.debug("Production of the gift '{}' delegated to elves", gift);
-        consumer.ack();
+        if (message.containsAttributes("gift")) {
+            String gift = message.getAttributesOrThrow("gift");
+            elvesPool.submit(new GiftProductionTask(gift));
+            logger.debug("Production of the gift '{}' delegated to elves", gift);
+            consumer.ack();
+        } else if (message.containsAttributes("work")) {
+            logger.info("There is no more gifts to produce");
+            consumer.ack();
+        } else {
+            logger.warn("Unexpected message: {}", message);
+            consumer.nack();
+        }
     }
 }
