@@ -51,6 +51,10 @@ public class Dictionary {
         return translations.getOrDefault(word, word);
     }
 
+    public void init() {
+        logger.info("Preparing dictionary to work");
+    }
+
     public void cleanUp() throws Exception {
         logger.info("Closing dictionary");
     }
