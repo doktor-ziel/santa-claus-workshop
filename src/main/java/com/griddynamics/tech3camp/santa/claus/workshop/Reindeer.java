@@ -21,6 +21,7 @@ public class Reindeer implements MessageReceiver {
 
     @Override
     public void receiveMessage(PubsubMessage message, AckReplyConsumer consumer) {
+        logger.debug("Message from Santa Clause received: {}", message.getAttributesOrDefault("gift", "work finished"));
         justSleepForLongRandomMoment();
         if (message.containsAttributes("gift")) {
             String gift = message.getAttributesOrThrow("gift");
