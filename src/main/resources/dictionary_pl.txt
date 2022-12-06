@@ -1,0 +1,2 @@
+doll:lalka
+teddy bear:maskotka
