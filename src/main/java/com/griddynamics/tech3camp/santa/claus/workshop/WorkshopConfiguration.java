@@ -26,7 +26,7 @@ public class WorkshopConfiguration {
 
     @Bean
     public ExecutorService elvesPool(@Value("${elves-pool-size}") int elvesNumber) {
-        return Executors.newWorkStealingPool(elvesNumber);
+        return new AutoCloseableExecutorService(Executors.newWorkStealingPool(elvesNumber));
     }
 
     @Bean
