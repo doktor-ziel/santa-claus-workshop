@@ -2,6 +2,7 @@ package com.griddynamics.tech3camp.santa.claus.workshop.digression;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -12,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Dictionary {
+public class Dictionary implements InitializingBean {
     private final Logger logger = LoggerFactory.getLogger(Dictionary.class);
 
     private final Map<String, String> translations;
@@ -69,5 +70,10 @@ public class Dictionary {
 
     public void cleanUp() throws Exception {
         logger.info("Closing dictionary");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        logger.info("afterPropertiesSet");
     }
 }
