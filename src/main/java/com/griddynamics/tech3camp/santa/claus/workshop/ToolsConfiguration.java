@@ -14,6 +14,7 @@ import com.google.pubsub.v1.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.DependsOn;
 import java.io.IOException;
 
 @Configuration
+@ConditionalOnProperty(value = "digression", havingValue = "false")
 public class ToolsConfiguration {
     @Bean
     public CredentialsProvider credentialsProvider() {
