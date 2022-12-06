@@ -75,3 +75,11 @@ Worth to notice is also error visible in PubSub emulator's logs:
 [pubsub]        at java.lang.Thread.run(Thread.java:750)
 [pubsub]
 ```
+
+
+## Key points
+
+Spring is clever, and it tries to destroy beans in intelligent way[*](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Bean.html):
+> As a convenience to the user, the container will attempt to infer a destroy method against an object returned from the @Bean method. For example, given an @Bean method returning an Apache Commons DBCP BasicDataSource, the container will notice the close() method available on that object and automatically register it as the destroyMethod. This 'destroy method inference' is currently limited to detecting only public, no-arg methods named 'close' or 'shutdown'. The method may be declared at any level of the inheritance hierarchy and will be detected regardless of the return type of the @Bean method (i.e., detection occurs reflectively against the bean instance itself at creation time).
+
+Unfortunately, it is not clever enough to resolve all issues...
