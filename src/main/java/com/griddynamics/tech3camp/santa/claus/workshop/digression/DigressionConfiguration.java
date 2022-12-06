@@ -13,7 +13,7 @@ public class DigressionConfiguration {
         return new Dictionary("/dictionary_pl.txt");
     }
 
-    @Bean
+    @Bean(initMethod = "init", destroyMethod = "cleanUp")
     public LabelMaker redPolishLabelMaker(Dictionary polishDictionary) {
         return new LabelMaker(polishDictionary, "red");
     }

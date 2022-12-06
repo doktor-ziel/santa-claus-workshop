@@ -17,4 +17,12 @@ public class LabelMaker {
     public Label createLabel(String name) {
         return new Label(dictionary.translate(name), color);
     }
+
+    public void init() {
+        logger.info("Preparing label maker to work");
+    }
+
+    public void cleanUp() {
+        logger.info("Destroying label maker");
+    }
 }
