@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(value = "digression", havingValue = "true")
 public class DigressionConfiguration {
 
-    @Bean
+    @Bean(destroyMethod = "cleanUp")
     public Dictionary polishDictionary() {
         return new Dictionary("/dictionary_pl.txt");
     }
