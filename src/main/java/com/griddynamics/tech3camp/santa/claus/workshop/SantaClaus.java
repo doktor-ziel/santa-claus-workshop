@@ -1,7 +1,6 @@
 package com.griddynamics.tech3camp.santa.claus.workshop;
 
 import com.google.cloud.pubsub.v1.Publisher;
-import com.google.pubsub.v1.PubsubMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,35 +8,39 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.function.Function;
 
 import static com.griddynamics.tech3camp.santa.claus.workshop.Utils.justSleepForShortRandomMoment;
 
 public class SantaClaus extends Thread {
 
     Logger logger = LoggerFactory.getLogger(SantaClaus.class);
-    private final Publisher publisher;
-    private final InputStream inputStream;
-    private final Function<String, PubsubMessage> reindeerMessageCreator;
+    private final Publisher requestGiftsForGoodChildrenPublisher;
+    private final InputStream giftsListInputStream;
+    private final MessageCreator reindeerMessageCreator;
 
-    public SantaClaus(Publisher publisher, InputStream inputStream, Function<String, PubsubMessage> reindeerMessageCreator) {
-        this.publisher = publisher;
-        this.inputStream = inputStream;
+    public SantaClaus(Publisher requestGiftsForGoodChildrenPublisher,
+                      InputStream giftsListInputStream,
+                      MessageCreator reindeerMessageCreator) {
+        this.requestGiftsForGoodChildrenPublisher = requestGiftsForGoodChildrenPublisher;
+        this.giftsListInputStream = giftsListInputStream;
         this.reindeerMessageCreator = reindeerMessageCreator;
     }
 
     @Override
     public void run() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(giftsListInputStream))) {
             br.lines().forEach(line -> {
                 logger.debug("Gift '{}' request read", line);
                 justSleepForShortRandomMoment();
-                publisher.publish(reindeerMessageCreator.apply(line));
+                requestGiftsForGoodChildrenPublisher
+                        .publish(reindeerMessageCreator.apply(line));
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            publisher.publish(PubsubMessage.newBuilder().putAttributes("work", "done").build());
+            requestGiftsForGoodChildrenPublisher
+                    .publish(reindeerMessageCreator.workFinishedMessage());
         }
     }
 }

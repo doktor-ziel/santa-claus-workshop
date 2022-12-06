@@ -7,7 +7,6 @@ public class Utils {
         sleepForProvidedTime(ThreadLocalRandom.current().nextInt(50, 100));
     }
 
-
     public static void justSleepForShortRandomMoment() {
         sleepForProvidedTime(ThreadLocalRandom.current().nextInt(5, 50));
     }

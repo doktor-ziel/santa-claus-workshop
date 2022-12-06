@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Function;
 
 @Configuration
 public class WorkshopConfiguration {
     @Bean
-    public InputStream giftsListInputStream(@Value("${gifts-list-resource-name}") String resourceName) {
+    public InputStream giftsListInputStream(
+            @Value("${gifts-list-resource-name}") String resourceName) {
         return getClass().getResourceAsStream(resourceName);
     }
 
@@ -28,8 +28,14 @@ public class WorkshopConfiguration {
     }
 
     @Bean
-    public SantaClaus santaClaus(Publisher requestGiftsForGoodChildrenPublisher, InputStream giftsListInputStream, Function<String, PubsubMessage> reindeerMessageCreator) {
-        return new SantaClaus(requestGiftsForGoodChildrenPublisher, giftsListInputStream, reindeerMessageCreator);
+    public SantaClaus santaClaus(
+            Publisher requestGiftsForGoodChildrenPublisher,
+            InputStream giftsListInputStream,
+            MessageCreator reindeerMessageCreator) {
+        return new SantaClaus(
+                requestGiftsForGoodChildrenPublisher,
+                giftsListInputStream,
+                reindeerMessageCreator);
     }
 
     @Bean
@@ -62,8 +68,8 @@ public class WorkshopConfiguration {
     }
 
     @Bean
-    public Function<String, PubsubMessage> reindeerMessageCreator() {
-        return line -> PubsubMessage.newBuilder().putAttributes("gift", line).build();
+    public MessageCreator reindeerMessageCreator() {
+        return new MessageCreator();
     }
 
     @Bean
