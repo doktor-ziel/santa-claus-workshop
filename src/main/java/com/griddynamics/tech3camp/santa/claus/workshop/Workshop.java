@@ -34,9 +34,5 @@ public class Workshop {
 
     public void cleanAfterWork() throws IOException, InterruptedException {
         santaClaus.join();
-        elvesPool.shutdown();
-        ordersForGiftsSubscriber.stopAsync();
-        requestGiftsForGoodChildrenPublisher.shutdown();
-        giftsListInputStream.close();
     }
 }
