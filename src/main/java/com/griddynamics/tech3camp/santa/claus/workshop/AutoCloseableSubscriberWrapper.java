@@ -2,6 +2,8 @@ package com.griddynamics.tech3camp.santa.claus.workshop;
 
 import com.google.cloud.pubsub.v1.Subscriber;
 
+import javax.annotation.PostConstruct;
+
 public class AutoCloseableSubscriberWrapper implements AutoCloseable {
     private final Subscriber subscriber;
 
@@ -31,6 +33,7 @@ public class AutoCloseableSubscriberWrapper implements AutoCloseable {
         subscriber.awaitTerminated();
     }
 
+    @PostConstruct
     public void startAsync() {
         subscriber.startAsync();
     }

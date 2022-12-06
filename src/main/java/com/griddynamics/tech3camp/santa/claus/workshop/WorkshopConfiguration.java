@@ -79,13 +79,9 @@ public class WorkshopConfiguration {
 
     @Bean
     public Workshop santaClausWorkshop(
-            InputStream giftsListInputStream,
-            ExecutorService elvesPool,
-            AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher,
             AutoCloseableSubscriberWrapper ordersForGiftsSubscriber,
             SantaClaus santaClaus) {
         return new Workshop(
-                giftsListInputStream, elvesPool, requestGiftsForGoodChildrenPublisher,
                 ordersForGiftsSubscriber, santaClaus);
     }
 }
