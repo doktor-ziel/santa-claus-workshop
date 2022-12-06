@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.griddynamics.tech3camp.santa.claus.workshop.Utils.sleepForProvidedTime;
+
 public class Dictionary {
     private final Logger logger = LoggerFactory.getLogger(Dictionary.class);
 
@@ -52,10 +54,12 @@ public class Dictionary {
     }
 
     public void init() {
+        sleepForProvidedTime(3 * 1000);
         logger.info("Preparing dictionary to work");
     }
 
     public void cleanUp() throws Exception {
+        sleepForProvidedTime(3 * 1000);
         logger.info("Closing dictionary");
     }
 }
