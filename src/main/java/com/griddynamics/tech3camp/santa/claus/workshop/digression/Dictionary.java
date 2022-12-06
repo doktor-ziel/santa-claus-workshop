@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Dictionary {
+public class Dictionary implements AutoCloseable {
     private final Logger logger = LoggerFactory.getLogger(Dictionary.class);
 
     private final Map<String, String> translations;
@@ -49,5 +49,10 @@ public class Dictionary {
 
     public String translate(String word) {
         return translations.getOrDefault(word, word);
+    }
+
+    @Override
+    public void close() throws Exception {
+        logger.info("Closing dictionary");
     }
 }
