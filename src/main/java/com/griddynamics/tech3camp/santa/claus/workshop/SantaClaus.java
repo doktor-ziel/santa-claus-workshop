@@ -14,11 +14,11 @@ import static com.griddynamics.tech3camp.santa.claus.workshop.Utils.justSleepFor
 public class SantaClaus extends Thread {
 
     Logger logger = LoggerFactory.getLogger(SantaClaus.class);
-    private final Publisher requestGiftsForGoodChildrenPublisher;
+    private final AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher;
     private final InputStream giftsListInputStream;
     private final MessageCreator reindeerMessageCreator;
 
-    public SantaClaus(Publisher requestGiftsForGoodChildrenPublisher,
+    public SantaClaus(AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher,
                       InputStream giftsListInputStream,
                       MessageCreator reindeerMessageCreator) {
         this.requestGiftsForGoodChildrenPublisher = requestGiftsForGoodChildrenPublisher;

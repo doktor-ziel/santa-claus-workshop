@@ -31,7 +31,7 @@ public class WorkshopConfiguration {
 
     @Bean
     public SantaClaus santaClaus(
-            Publisher requestGiftsForGoodChildrenPublisher,
+            AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher,
             InputStream giftsListInputStream,
             MessageCreator reindeerMessageCreator) {
         return new SantaClaus(
@@ -41,14 +41,15 @@ public class WorkshopConfiguration {
     }
 
     @Bean
-    public Publisher requestGiftsForGoodChildrenPublisher(
+    @DependsOn("ordersForGiftsSubscriber")
+    public AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher(
             TopicName topicName,
             TransportChannelProvider channelProvider,
             CredentialsProvider credentialsProvider) throws IOException {
-        return Publisher.newBuilder(topicName)
+        return new AutoCloseablePublisherWrapper(Publisher.newBuilder(topicName)
                 .setChannelProvider(channelProvider)
                 .setCredentialsProvider(credentialsProvider)
-                .build();
+                .build());
     }
 
     @Bean
@@ -78,7 +79,7 @@ public class WorkshopConfiguration {
     public Workshop santaClausWorkshop(
             InputStream giftsListInputStream,
             ExecutorService elvesPool,
-            Publisher requestGiftsForGoodChildrenPublisher,
+            AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher,
             Subscriber ordersForGiftsSubscriber,
             SantaClaus santaClaus) {
         return new Workshop(
