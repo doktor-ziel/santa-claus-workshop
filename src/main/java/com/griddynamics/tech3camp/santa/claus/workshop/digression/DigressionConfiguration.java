@@ -18,4 +18,8 @@ public class DigressionConfiguration {
         return new LabelMaker(polishDictionary, "red");
     }
 
+    @Bean(initMethod = "init", destroyMethod = "cleanUp")
+    public Glue justGlue() {
+        return new Glue();
+    }
 }

@@ -9,4 +9,12 @@ public class Glue {
     public void glue() {
         logger.warn("Just gluing");
     }
+
+    public void init() {
+        logger.info("Preparing glue to work");
+    }
+
+    public void cleanUp() {
+        logger.info("Destroying glue");
+    }
 }
