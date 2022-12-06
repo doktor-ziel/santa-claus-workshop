@@ -1,6 +1,5 @@
 package com.griddynamics.tech3camp.santa.claus.workshop;
 
-import com.google.cloud.pubsub.v1.Subscriber;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,14 +9,14 @@ public class Workshop {
     private final InputStream giftsListInputStream;
     private final ExecutorService elvesPool;
     private final AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher;
-    private final Subscriber ordersForGiftsSubscriber;
+    private final AutoCloseableSubscriberWrapper ordersForGiftsSubscriber;
     private final SantaClaus santaClaus;
 
     public Workshop(
             InputStream giftsListInputStream,
             ExecutorService elvesPool,
             AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher,
-            Subscriber ordersForGiftsSubscriber,
+            AutoCloseableSubscriberWrapper ordersForGiftsSubscriber,
             SantaClaus santaClaus) {
         this.giftsListInputStream = giftsListInputStream;
         this.elvesPool = elvesPool;

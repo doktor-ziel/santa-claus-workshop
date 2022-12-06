@@ -53,21 +53,23 @@ public class WorkshopConfiguration {
     }
 
     @Bean
-    public MessageReceiver reindeerServant(ExecutorService elvesPool) {
+    public Reindeer reindeerServant(ExecutorService elvesPool) {
         return new Reindeer(elvesPool);
     }
 
     @Bean
     @DependsOn("subscription")
-    public Subscriber ordersForGiftsSubscriber(
+    public AutoCloseableSubscriberWrapper ordersForGiftsSubscriber(
             ProjectSubscriptionName projectSubscriptionName,
-            MessageReceiver messageReceiver,
+            Reindeer reindeer,
             TransportChannelProvider channelProvider,
             CredentialsProvider credentialsProvider) {
-        return Subscriber.newBuilder(projectSubscriptionName, messageReceiver)
+        AutoCloseableSubscriberWrapper subscriberWrapper = new AutoCloseableSubscriberWrapper(Subscriber.newBuilder(projectSubscriptionName, reindeer)
                 .setChannelProvider(channelProvider)
                 .setCredentialsProvider(credentialsProvider)
-                .build();
+                .build());
+        reindeer.setSubscriberWrapper(subscriberWrapper);
+        return subscriberWrapper;
     }
 
     @Bean
@@ -80,7 +82,7 @@ public class WorkshopConfiguration {
             InputStream giftsListInputStream,
             ExecutorService elvesPool,
             AutoCloseablePublisherWrapper requestGiftsForGoodChildrenPublisher,
-            Subscriber ordersForGiftsSubscriber,
+            AutoCloseableSubscriberWrapper ordersForGiftsSubscriber,
             SantaClaus santaClaus) {
         return new Workshop(
                 giftsListInputStream, elvesPool, requestGiftsForGoodChildrenPublisher,

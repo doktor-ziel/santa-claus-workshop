@@ -14,9 +14,14 @@ public class Reindeer implements MessageReceiver {
 
     Logger logger = LoggerFactory.getLogger(Reindeer.class);
     private final ExecutorService elvesPool;
+    private AutoCloseableSubscriberWrapper subscriberWrapper;
 
     public Reindeer(ExecutorService elvesPool) {
         this.elvesPool = elvesPool;
+    }
+
+    public void setSubscriberWrapper(AutoCloseableSubscriberWrapper subscriberWrapper) {
+        this.subscriberWrapper = subscriberWrapper;
     }
 
     @Override
@@ -30,6 +35,9 @@ public class Reindeer implements MessageReceiver {
             consumer.ack();
         } else if (message.containsAttributes("work")) {
             logger.info("There is no more gifts to produce");
+            if (subscriberWrapper != null) {
+                subscriberWrapper.workDone();
+            }
             consumer.ack();
         } else {
             logger.warn("Unexpected message: {}", message);
