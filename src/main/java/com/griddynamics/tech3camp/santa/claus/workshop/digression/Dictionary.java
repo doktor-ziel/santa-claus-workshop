@@ -51,7 +51,7 @@ public class Dictionary {
         return translations.getOrDefault(word, word);
     }
 
-    public void close() throws Exception {
+    public void shutdown() throws Exception {
         logger.info("Closing dictionary");
     }
 }
