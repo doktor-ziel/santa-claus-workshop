@@ -3,6 +3,8 @@ package com.griddynamics.tech3camp.santa.claus.workshop.digression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,6 +55,16 @@ public class Dictionary {
 
     public void init() {
         logger.info("Preparing dictionary to work");
+    }
+
+    @PostConstruct
+    public void postConstructMethod() {
+        logger.info("postConstructMethod");
+    }
+
+    @PreDestroy
+    public void preDestroyMethod() {
+        logger.info("preDestroyMethod");
     }
 
     public void cleanUp() throws Exception {
