@@ -15,12 +15,12 @@ public class DigressionConfiguration {
         return new Dictionary("/dictionary_pl.txt");
     }
 
-    @Bean(initMethod = "init", destroyMethod = "cleanUp")
+    @Bean
     public LabelMaker redPolishLabelMaker(Dictionary polishDictionary) {
         return new LabelMaker(polishDictionary, "red");
     }
 
-    @Bean(initMethod = "init", destroyMethod = "cleanUp")
+    @Bean
     public Glue justGlue() {
         return new Glue();
     }
